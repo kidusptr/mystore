@@ -12,10 +12,14 @@ class Product(models.Model):
 
 
 class Customer(models.Model):
+    MEMBERSHIP_BRONZE = "B"
+    MEMBERSHIP_SILVER = "S"
+    MEMBERSHIP_GOLD = "G"
+
     MEMBERSHIP_CHOICES = [
-        ("B", "Bronze"),
-        ("S", "Silver"),
-        ("G", "Gold"),
+        (MEMBERSHIP_BRONZE, "Bronze"),
+        (MEMBERSHIP_SILVER, "Silver"),
+        (MEMBERSHIP_GOLD, "Gold"),
     ]
 
     first_name = models.CharField(max_length=255)
@@ -23,4 +27,6 @@ class Customer(models.Model):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
     birth_date = models.DateField(null=True, blank=True)
-    membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default="B")
+    membership = models.CharField(
+        max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE
+    )
