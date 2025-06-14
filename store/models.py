@@ -6,7 +6,10 @@ from django.db import models
 class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey(
-        Product, on_delete=models.SET_NULL, null=True, related_name="+"
+        "Product",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="+",
     )
 
 
@@ -23,7 +26,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.IntegerField()
     last_updated = models.DateTimeField(auto_now=True)
-    Collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+    collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     promotions = models.ManyToManyField(Promotion)
 
 
