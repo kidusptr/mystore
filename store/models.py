@@ -8,7 +8,7 @@ class Collection(models.Model):
 
 
 class Promotion(models.Model):
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     discount = models.FloatField()
     start_date = models.DateField()
     end_date = models.DateField()
@@ -21,6 +21,7 @@ class Product(models.Model):
     inventory = models.IntegerField()
     last_updated = models.DateTimeField(auto_now=True)
     Collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
+    promotions = models.ManyToManyField(Promotion)
 
 
 class Customer(models.Model):
