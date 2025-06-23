@@ -6,12 +6,11 @@ from store.models import Product
 
 def say_hello(request):
     try:
-        product = Product.objects.get(pk=0)
-        print(product)
+        queryset = Product.objects.filter(title__icontains="coffee")
     except ObjectDoesNotExist:
         return render(request, "errors.html")
 
-    return render(request, "main.html", {"name": "Django"})
+    return render(request, "main.html", {"name": "Django", "products": list(queryset)})
 
 
 # Create your views here.
