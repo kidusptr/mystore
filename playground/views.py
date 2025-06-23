@@ -7,11 +7,13 @@ from store.models import Product
 
 def say_hello(request):
     try:
-        queryset = Product.objects.filter(inventory=F("collection_id"))
+        queryset = Product.objects.order_by("title")
+        products = Product.objects.order_by("unit_price", "-title")
+        product = Product.objects.earliest("unit_price")
     except ObjectDoesNotExist:
         return render(request, "errors.html")
 
-    return render(request, "main.html", {"name": "Django", "products": list(queryset)})
+    return render(request, "main.html", {"name": "Django", "product": product})
 
 
 # Create your views here.
