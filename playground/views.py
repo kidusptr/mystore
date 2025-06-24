@@ -7,7 +7,7 @@ from store.models import Product
 
 def say_hello(request):
     try:
-        queryset = Product.objects.order_by("title").reverse()[:10]
+        queryset = Product.objects.values("id", "title", "collection__title")[:20]
 
     except ObjectDoesNotExist:
         return render(request, "errors.html")
