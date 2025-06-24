@@ -2,8 +2,24 @@
   <body>
     <h1>looks like we're getting somewhere with, {{ name }}!</h1>
     <ul>
-      {% for product in products %}
-      <li>{{ product.title }} -- {{product.collection.title}}</li>
+      {% for order in orders %}
+      <li>
+        <strong>Order ID:</strong> {{ order.id }}<br />
+        <strong>Customer:</strong>
+        {{ order.customer.first_name }} {{order.customer.last_name }}<br />
+        <strong>Placed At:</strong> {{ order.placed_at }}<br />
+        <strong>Status:</strong> {{ order.payment_status }}<br />
+        <strong>Order Items:</strong>
+        <ul>
+          {% for item in order.orderitem_set.all %}
+          <li>
+            Product: {{ item.product.title }}<br />
+            Quantity: {{ item.quantity }}<br />
+            Unit Price: {{ item.unit_price }}<br />
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
       {% endfor %}
     </ul>
   </body>
