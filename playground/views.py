@@ -7,9 +7,7 @@ from store.models import Product, OrderItem
 
 def say_hello(request):
     try:
-        queryset = Product.objects.filter(
-            id__in=OrderItem.objects.values("product__id").distinct()
-        ).order_by("title")
+        queryset = Product.objects.defer("description")
 
     except ObjectDoesNotExist:
         return render(request, "errors.html")
