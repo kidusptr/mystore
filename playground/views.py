@@ -7,7 +7,12 @@ from store.models import Product, OrderItem
 
 def say_hello(request):
     try:
-        queryset = Product.objects.defer("description")
+        # queryset = Product.objects.defer("description")
+        queryset = (
+            Product.objects.prefetch_related("promotions")
+            .select_related("collection")
+            .all()
+        )
 
     except ObjectDoesNotExist:
         return render(request, "errors.html")
