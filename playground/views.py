@@ -1,27 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Value, F, Func
-from django.db.models.functions import Concat
-from django.db.models.aggregates import Count, Sum, Avg, Max, Min
+from django.db.models import Count, ExpressionWrapper, F, DecimalField
 from store.models import Product, OrderItem, Order, Customer
 
 
 def say_hello(request):
     try:
-        queryset = Customer.objects.annotate(
-            full_name=Func(
-                F("first_name"), Value(" "), F("last_name"), function="CONCAT"
-            )
+        discounted_price = ExpressionWrapper(
+            F("unit_price") * 0.8, output_field=DecimalField()
         )
+        queryset = Product.objects.annotate(discount_price=discounted_price)
 
-        test = Customer.objects.annotate(
-            full_name=Concat("first_name", Value(" "), "last_name")
-        )
     except ObjectDoesNotExist:
         return render(request, "errors.html")
 
-    return render(request, "main.html", {"name": "Django", "result": list(test)})
+    return render(request, "main.html", {"name": "Django", "result": list(queryset)})
 
 
 # Create your views here.
