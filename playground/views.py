@@ -7,14 +7,15 @@ from tags.models import TaggedItem
 
 def say_hello(request):
     try:
-        Collection.objects.filter(pk=12).update(title="Cosmetcis")
+        Collection.objects.filter(pk=12).delete()
+        queryset = Collection.objects.all()
     except ObjectDoesNotExist:
         return render(request, "errors.html")
 
     return render(
         request,
         "main.html",
-        {"name": "Django"},
+        {"name": "Django", "collections": list(queryset)},
     )
 
 
