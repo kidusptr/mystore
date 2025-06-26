@@ -22,6 +22,8 @@
       </li>
       {% endfor %}
     </ul> -->
-    <p>Result:</p>
+    {%for result in results%}
+    <p>{{result.title}}</p>
+    {%endfor%}
   </body>
 </html>
