@@ -7,10 +7,6 @@ class CollectionSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=255)
 
-    class Meta:
-        model = Collection
-        fields = ["id", "title"]
-
 
 class ProductSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -27,7 +23,3 @@ class ProductSerializer(serializers.Serializer):
 
     def calculate_tax(self, product):
         return product.unit_price + (product.unit_price * Decimal(0.15))
-
-    # class Meta:
-    #     model = Product
-    #     fields = ["id", "title", "price", "price_with_tax", "collection"]
