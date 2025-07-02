@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Product, Collection
 
 
-class CollectionSerializer(serializers.ModelSerializer):
+class CollectionSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=255)
 
@@ -12,7 +12,7 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ["id", "title"]
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=255)
     price = serializers.DecimalField(
@@ -22,11 +22,12 @@ class ProductSerializer(serializers.ModelSerializer):
     collection = serializers.HyperlinkedRelatedField(
         queryset=Collection.objects.all(),
         view_name="collection-detail",
+        lookup_field="id",
     )
 
     def calculate_tax(self, product):
         return product.unit_price + (product.unit_price * Decimal(0.15))
 
-    class Meta:
-        model = Product
-        fields = ["id", "title", "price", "price_with_tax", "collection"]
+    # class Meta:
+    #     model = Product
+    #     fields = ["id", "title", "price", "price_with_tax", "collection"]
