@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Product
@@ -19,7 +19,10 @@ def product_list(request):
 
     elif request.method == "POST":
         serializer = ProductSerializer(data=request.data)
-        return Response("Ok")
+        if serializer.is_valid():
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view()
