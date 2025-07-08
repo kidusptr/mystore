@@ -7,7 +7,17 @@ name = "pypi"
 django = "*"
 django-debug-toolbar = "*"
 mysqlclient = "*"
+<<<<<<< HEAD
 drf-nested-routers = "*"
+=======
+<<<<<<< HEAD
+djangorestframework = "*"
+drf-nested-routers = "*"
+django-filter = "*"
+=======
+drf-nested-routers = "*"
+>>>>>>> master
+>>>>>>> part-2
 
 [dev-packages]
 
