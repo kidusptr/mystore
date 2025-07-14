@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.utils.html import format_html, urlencode
 from django.urls import reverse
 
-from .models import models
+from . import models
 
 # Register your models here.
 

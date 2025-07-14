@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import views
+from . import views
 from rest_framework_nested import routers
 
 router = routers.DefaultRouter()
