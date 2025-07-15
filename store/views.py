@@ -5,13 +5,15 @@ from rest_framework.mixins import (
     CreateModelMixin,
     RetrieveModelMixin,
     DestroyModelMixin,
+    UpdateModelMixin,
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
-from .models import Product, Collection, OrderItem, Review, Cart, CartItem
+from .models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer
 from .serializers import (
     ProductSerializer,
+    CustomerSerializer,
     CollectionSerializer,
     ReviewSerializer,
     CartSerializer,
@@ -71,9 +73,9 @@ class ReviewViewSet(ModelViewSet):
 
 class CartViewSet(
     CreateModelMixin,
-    GenericViewSet,
     RetrieveModelMixin,
     DestroyModelMixin,
+    GenericViewSet,
 ):
     queryset = Cart.objects.prefetch_related("items__product").all()
     serializer_class = CartSerializer
@@ -98,3 +100,10 @@ class CartItemsViewSet(ModelViewSet):
         return CartItem.objects.filter(cart_id=self.kwargs["cart_pk"]).select_related(
             "product"
         )
+
+
+class CustomerViewSet(
+    CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet
+):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer

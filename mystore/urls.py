@@ -24,6 +24,8 @@ admin.site.index_title = "MyStore Admin Portal"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.jwt")),
     path("playground/", include("playground.urls")),
     path("store/", include("store.urls")),
 ] + debug_toolbar_urls()
