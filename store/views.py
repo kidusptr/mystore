@@ -8,6 +8,7 @@ from rest_framework.mixins import (
     UpdateModelMixin,
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
 from .models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer
@@ -107,3 +108,7 @@ class CustomerViewSet(
 ):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+    @action(detail=False)
+    def me(self, request):
+        return Response(request.user.id)
