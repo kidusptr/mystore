@@ -9,7 +9,12 @@ from rest_framework.mixins import (
 )
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import (
+    IsAuthenticated,
+    AllowAny,
+    IsAdminUser,
+    DjangoModelPermissions,
+)
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
 from .models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer
@@ -115,7 +120,7 @@ class CartItemsViewSet(ModelViewSet):
 class CustomerViewSet(ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [DjangoModelPermissions]
 
     @action(detail=False, methods=["GET", "PUT"], permission_classes=[IsAuthenticated])
     def me(self, request):
