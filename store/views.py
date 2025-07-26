@@ -17,7 +17,16 @@ from rest_framework.permissions import (
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Count
-from .models import Product, Collection, OrderItem, Review, Cart, CartItem, Customer
+from .models import (
+    Product,
+    Collection,
+    OrderItem,
+    Review,
+    Cart,
+    CartItem,
+    Customer,
+    Order,
+)
 from .serializers import (
     ProductSerializer,
     CustomerSerializer,
@@ -27,6 +36,7 @@ from .serializers import (
     CartItemsSerializer,
     AddCartItemSerializer,
     UpdateCartItemSerializer,
+    OrderSerializer,
 )
 from .filters import ProductFilter
 from .pagination import DefaultPagination
@@ -87,10 +97,7 @@ class ReviewViewSet(ModelViewSet):
 
 
 class CartViewSet(
-    CreateModelMixin,
-    RetrieveModelMixin,
-    DestroyModelMixin,
-    GenericViewSet,
+    CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericViewSet
 ):
     queryset = Cart.objects.prefetch_related("items__product").all()
     serializer_class = CartSerializer
@@ -138,3 +145,8 @@ class CustomerViewSet(ModelViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
