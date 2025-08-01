@@ -184,3 +184,7 @@ EMAIL_PORT = 2525
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
 DEFAULT_FROM_EMAIL = "kidus@localhost.com"
+
+ADMINS = [
+    ("kidus", "kidus@localhost.com"),
+]
