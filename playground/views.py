@@ -12,7 +12,7 @@ def index(request):
             "kidus@localhost.com",
             ["test@localhost.com"],
         )
-        message.attach_file(os.path.join("playground", "email.html"))
+        message.attach_file(os.path.join("playground", "templates/emails/email.html"))
         message.send()
         return HttpResponse("Test email sent to admins.")
 
