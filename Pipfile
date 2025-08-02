@@ -3,17 +3,24 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[[source]]
+url = "plock"
+verify_ssl = true
+name = ""
+
 [packages]
 django = "*"
 django-debug-toolbar = "*"
 mysqlclient = "*"
 djangorestframework = "*"
 drf-nested-routers = "*"
-django-filter = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
 django-cors-headers = "*"
+django-filter = {version = "*", index = ""}
+redis = "*"
+celery = "*"
 
 [dev-packages]
 

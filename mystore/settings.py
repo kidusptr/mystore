@@ -104,7 +104,7 @@ DATABASES = {
         "NAME": "mystore3",
         "HOST": "localhost",
         "USER": "root",
-        "PASSWORD": "strong#123",
+        "PASSWORD": "your_password",
     }
 }
 
