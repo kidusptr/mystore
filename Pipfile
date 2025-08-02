@@ -18,9 +18,10 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
 django-cors-headers = "*"
-django-filter = {version = "*", index = ""}
+django-filter = "*"
 redis = "*"
 celery = "*"
+setuptools = "*"
 
 [dev-packages]
 
