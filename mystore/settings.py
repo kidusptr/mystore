@@ -104,7 +104,7 @@ DATABASES = {
         "NAME": "mystore3",
         "HOST": "localhost",
         "USER": "root",
-        "PASSWORD": "your_password",
+        "PASSWORD": "strong#123",
     }
 }
 
@@ -189,11 +189,11 @@ ADMINS = [
     ("kidus", "kidus@localhost.com"),
 ]
 
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_BROKER_URL = "redis://localhost:6379/1"
 CELERY_BEAT_SCHEDULE = {
-    "notify_customer":{
-        "task":"playground.tasks.notify_customers",
-        "schedule":5,
-        "args":["Hello Customer!"]
+    "notify_customer": {
+        "task": "playground.tasks.notify_customers",
+        "schedule": 5,
+        "args": ["Hello Customer!"],
     }
 }
