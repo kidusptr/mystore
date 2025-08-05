@@ -22,3 +22,11 @@ class TestCreateCollection:
         client.force_authenticate(user=User(is_staff=True))
         response = client.post("/store/collections/", {"title": ""})
         assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.data["title"] == ["This field may not be blank."]
+
+    def test_if_valid_data_returns_201(self):
+        client = APIClient()
+        client.force_authenticate(user=User(is_staff=True))
+        response = client.post("/store/collections/", {"title": "a"})
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data["id"] > 0
