@@ -1,10 +1,7 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-from django.core.mail import EmailMessage, BadHeaderError
-from .tasks import notify_customers
-import os
+import requests
 
 
 def index(request):
-    notify_customers.delay("Hello")
-    return render(request,"main.html")
+    requests.get("https://httpbin.org/delay/2")
+    return render(request, "main.html", {"name": "Django"})
