@@ -25,6 +25,7 @@ admin.site.site_header = "MyStore Admin"
 admin.site.index_title = "MyStore Admin Portal"
 
 urlpatterns = [
+    path("", include("core.urls")),
     path("admin/", admin.site.urls),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),
