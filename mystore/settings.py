@@ -220,21 +220,23 @@ LOGGING = {
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
         "file": {
             "class": "logging.FileHandler",
             "filename": "general.log",
+            "formatter": "verbose",
         },
     },
     "loggers": {
-        " ": {
+        "": {
             "handlers": ["console", "file"],
             "level": "INFO",
         },
     },
     "formatters": {
         "verbose": {
-            "format": "{asctime} {levelname} {name} {process:d} {thread:d} {message}",
+            "format": "{asctime} ({levelname}) - {name} {message}",
             "style": "{",
         },
     },
