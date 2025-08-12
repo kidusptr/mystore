@@ -26,6 +26,7 @@ from .models import (
     CartItem,
     Customer,
     Order,
+    ProductImage,
 )
 from .serializers import (
     ProductSerializer,
@@ -39,6 +40,7 @@ from .serializers import (
     OrderSerializer,
     CreateOrderSerializer,
     UpdateOrderSerializer,
+    ProductImageSerializer,
 )
 from .filters import ProductFilter
 from .pagination import DefaultPagination
@@ -46,7 +48,7 @@ from .permissions import IsAdminOrReadOnly, ViewCustomerHistory
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.prefetch_related("images").all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
@@ -73,10 +75,10 @@ class CollectionViewSet(ModelViewSet):
     serializer_class = CollectionSerializer
     permission_classes = [IsAdminOrReadOnly]
 
-    def get_permissions(self):
-        if self.request.method == "GET":
-            return [AllowAny()]
-        return [IsAuthenticated()]
+    # def get_permissions(self):
+    #     if self.request.method == "GET":
+    #         return [AllowAny()]
+    #     return [IsAuthenticated()]
 
     def destroy(self, request, *args, **kwargs):
         if Product.objects.filter(collection_id=kwargs["pk"]).exists():
@@ -179,3 +181,13 @@ class OrderViewSet(ModelViewSet):
             return Order.objects.all()
         customer_id = Customer.objects.only("id").get(user_id=user.id)
         return Order.objects.filter(customer_id=customer_id)
+
+
+class ProductImageViewSet(ModelViewSet):
+    serializer_class = ProductImageSerializer
+
+    def get_queryset(self):
+        return ProductImage.objects.filter(product_id=self.kwargs["product_pk"])
+
+    def get_serializer_context(self):
+        return {"product_id": self.kwargs["product_pk"]}
