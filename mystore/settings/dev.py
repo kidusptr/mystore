@@ -19,3 +19,8 @@ DATABASES = {
         "PASSWORD": "strong#123",
     }
 }
+
+MIDDLEWARE += [
+    "silk.middleware.SilkyMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]

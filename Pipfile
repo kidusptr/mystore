@@ -25,6 +25,7 @@ setuptools = "*"
 flower = "*"
 django-redis = "*"
 whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 pytest = "*"
