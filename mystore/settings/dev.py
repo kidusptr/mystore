@@ -1,5 +1,10 @@
+import os
+from dotenv import load_dotenv
+from urllib.parse import urlparse, parse_qsl
 from .common import *
 
+load_dotenv()
+tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -9,7 +14,25 @@ SECRET_KEY = "django-insecure-yh6o%&jdl96xe+kc8p#1bm22xfy21%qqk-=v4o_ivesm8e^20-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Add these at the top of your settings.py
 
+
+# Replace the DATABASES section of your settings.py with this
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "mystore_dev",
+#         "USER": tmpPostgres.username,
+#         "PASSWORD": tmpPostgres.password,
+#         "HOST": tmpPostgres.hostname,
+#         "PORT": 5432,
+#         "OPTIONS": {
+#             "sslmode": "require",  # Important for Neon
+#             "options": "endpoint=ep-jolly-mode-a2cpci3s",
+#         },
+#     }
+# }
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
