@@ -162,32 +162,17 @@ DJOSER = {
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = ""
-EMAIL_HOST_PASSWORD = ""
 DEFAULT_FROM_EMAIL = "kidus@localhost.com"
 
 ADMINS = [
     ("kidus", "kidus@localhost.com"),
 ]
 
-CELERY_BROKER_URL = "redis://localhost:6379/1"
 CELERY_BEAT_SCHEDULE = {
     "notify_customer": {
         "task": "playground.tasks.notify_customers",
         "schedule": 5,
         "args": ["Hello Customer!"],
-    }
-}
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
     }
 }
 

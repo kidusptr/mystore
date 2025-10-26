@@ -33,17 +33,35 @@ SECRET_KEY = "django-insecure-yh6o%&jdl96xe+kc8p#1bm22xfy21%qqk-=v4o_ivesm8e^20-
 #         },
 #     }
 # }
+MIDDLEWARE += [
+    "silk.middleware.SilkyMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "mystore3",
-        "HOST": "localhost",
+        "HOST": "mysql",
         "USER": "root",
         "PASSWORD": "strong#123",
     }
 }
 
-MIDDLEWARE += [
-    "silk.middleware.SilkyMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-]
+
+CELERY_BROKER_URL = "redis://redis:6379/1"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+EMAIL_HOST = "smtp4dev"
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
