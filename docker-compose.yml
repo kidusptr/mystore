@@ -4,7 +4,7 @@ services:
     build: .
     command: ./wait-for-it.sh mysql:3306 -- ./docker-entrypoint.sh
     ports:
-      - 8080:8080
+      - 8000:8000
     depends_on:
       - redis
       - mysql
@@ -12,17 +12,16 @@ services:
     volumes:
       - .:/app
   mysql:
-    image: mysql:9.3
+    image: mysql:8.0
     ports:
       - 3306:3306
-    restart: always
     environment:
       - MYSQL_DATABASE=mystore3
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=strong#123
       - MYSQL_ROOT_PASSWORD=strong#123
     volumes:
       - mysqldata:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
   redis:
     image: redis:6.2-alpine
     ports:
@@ -38,21 +37,21 @@ services:
     restart: always
   celery:
     build: .
-    command: celery -A storefront worker --loglevel=info
+    command: celery -A mystore worker --loglevel=info
     depends_on:
       - redis
     volumes:
       - .:/app
   celery-beat:
     build: .
-    command: celery -A storefront beat --loglevel=info
+    command: celery -A mystore beat --loglevel=info
     depends_on:
       - redis
     volumes:
       - .:/app
   flower:
     build: .
-    command: celery -A storefront flower
+    command: celery -A mystore flower
     depends_on:
       - web
       - redis
